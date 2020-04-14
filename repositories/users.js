@@ -8,7 +8,7 @@ class UsersRepository {
     }
     this.filename = filename;
     try {
-      false.accessSync(this.filename);
+      fs.accessSync(this.filename);
     } catch (error) {
       fs.writeFileSync(this.filename, '[]');
     }
@@ -38,16 +38,18 @@ class UsersRepository {
   randomId() {
     return crypto.randomBytes(4).toString('hex');
   }
+
+  async getOne(id) {
+    const records = await this.getAll();
+    return records.find((record) => record.id === id);
+  }
 }
 
 const test = async () => {
   const repo = new UsersRepository('users.json');
 
-  await repo.create({ email: 'test@test.com', password: 'password' });
-
-  const users = await repo.getAll();
-
-  console.log(users);
+  const user = await repo.getOne('889ecf9e');
+  console.log(user);
 };
 
 test();
