@@ -27,6 +27,7 @@ class UsersRepository {
     const records = await this.getAll();
     records.push(attrs);
     await this.writeAll(records);
+    return attrs;
   }
 
   async writeAll(records) {
