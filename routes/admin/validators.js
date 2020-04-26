@@ -10,7 +10,7 @@ module.exports = {
     .trim()
     .toFloat()
     .isFloat({ min: 1 })
-    .withMessage('Must be a number greater then 1'),
+    .withMessage('Must be a number greater than 1'),
   requireEmail: check('email')
     .trim()
     .normalizeEmail()
@@ -33,6 +33,8 @@ module.exports = {
     .custom((passwordConfirmation, { req }) => {
       if (passwordConfirmation !== req.body.password) {
         throw new Error('Passwords must match');
+      } else {
+        return true;
       }
     }),
   requireEmailExists: check('email')
